@@ -8,7 +8,6 @@ function ItemList({ form, setForm }) {
             ...form,
             products: [...products, { name: "", price: "", qty: "" }],
         });
-        console.log(products);
     };
 
     const changeHandler = (e, index) => {
@@ -22,6 +21,7 @@ function ItemList({ form, setForm }) {
         const newProducts = [...products];
         newProducts.splice(index, 1);
         setForm({ ...form, products: newProducts });
+
     };
 
     return (
@@ -62,8 +62,8 @@ function ProductItem({ product, changeHandler, deleteHandler }) {
                 />
                 <FormInput
                     name='qty'
-                    label='Qty'
-                    type='number'
+                    label='Quantity'
+                    type='text'
                     value={product.qty}
                     onChange={changeHandler}
                 />

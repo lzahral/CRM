@@ -223,6 +223,9 @@ h4 {
     color: #57aac8;
     margin-bottom: 25px;
 }
+.customer-detail__products p span {
+    color: white;
+}
 
 .customer-detail__buttons {
     display: flex;

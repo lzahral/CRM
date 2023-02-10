@@ -8,12 +8,13 @@ function CustomerEditPage({ data, id }) {
 
     const [form, setForm] = useState({
         name: data.name,
-        lastName: data.lastName,
-        email: data.email,
         phone: data.phone || "",
         address: data.address || "",
         postalCode: data.postalCode || "",
+        discountCode: data.discountCode || "",
         products: data.products || "",
+        purchasePrice: data.purchasePrice,
+        purchaseTimes: data.purchaseTimes,
         date: date,
     });
 

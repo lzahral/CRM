@@ -14,9 +14,8 @@ function Card({ customer }) {
         <div className='card'>
             <div className='card__details'>
                 <p>
-                    {customer.name} {customer.lastName}
+                    {customer.name}
                 </p>
-                <p>{customer.email}</p>
             </div>
             <div className='card__buttons'>
                 <button onClick={deleteHandler}>Delete</button>

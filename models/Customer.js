@@ -6,19 +6,13 @@ const customerSchema = new Schema({
         required: true,
         minLength: 1,
     },
-    lastName: {
-        type: String,
-        required: true,
-        minLength: 1,
-    },
-    email: {
-        type: String,
-        required: true,
-        minLength: 1,
-    },
+    //lastName
     phone: String,
     address: String,
     postalCode: Number,
+    discountCode: String,
+    purchasePrice: Number,
+    purchaseTimes: Number,
     date: Date,
     products: {
         type: Array,

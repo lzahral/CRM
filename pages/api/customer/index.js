@@ -15,17 +15,18 @@ export default async function handler(req, res) {
 
     if (req.method === "POST") {
         const data = req.body.data;
-        console.log(data);
+        data.purchasePrice = data.products.reduce((total, product) => {
+            return total + +product.price * +product.qty;
+        }, 0);
+        if (data.products.length > 0) data.purchaseTimes = 1;
 
-        if (!data.name || !data.lastName || !data.email)
+        if (!data.name)
             return res
                 .status(400)
                 .json({ status: "failed", message: "Invalid data" });
-
         try {
             const customer = await Customer.create(data);
-            res.status(201)
-            .json({
+            res.status(201).json({
                 status: "success",
                 message: "Data created",
                 data: customer,

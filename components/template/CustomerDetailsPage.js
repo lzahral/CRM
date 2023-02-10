@@ -22,34 +22,30 @@ function CustomerDetailsPage({ data }) {
                     <p>{data.name}</p>
                 </div>
                 <div className='customer-detail__item'>
-                    <span>Last Name: </span>
-                    <p>{data.lastName}</p>
-                </div>
-                <div className='customer-detail__item'>
-                    <span>Email: </span>
-                    <p>{data.email}</p>
-                </div>
-                <div className='customer-detail__item'>
                     <span>Phone: </span>
                     <p>{data.phone}</p>
-                </div>
-                <div className='customer-detail__item'>
-                    <span>Address: </span>
-                    <p>{data.address}</p>
                 </div>
                 <div className='customer-detail__item'>
                     <span>Postal Code: </span>
                     <p>{data.postalCode}</p>
                 </div>
                 <div className='customer-detail__item'>
+                    <span>Discount Code: </span>
+                    <p>{data.discountCode}</p>
+                </div>
+                <div className='customer-detail__item'>
                     <span>Date: </span>
                     <p>{moment(data.date).utc().format("YYYY-MM-DD")}</p>
+                </div>
+                <div className='customer-detail__item'>
+                    <span>Address: </span>
+                    <p>{data.address}</p>
                 </div>
             </div>
             <div className='customer-detail__products'>
                 <p>Name</p>
                 <p>Price</p>
-                <p>Qty</p>
+                <p>Quantity</p>
                 {data.products.map((product, index) => (
                     <React.Fragment key={index}>
                         <p>{product.name}</p>
@@ -57,6 +53,12 @@ function CustomerDetailsPage({ data }) {
                         <span>{product.qty}</span>
                     </React.Fragment>
                 ))}
+                <p>
+                    Purchase Price: <span>{data.purchasePrice}</span>
+                </p>
+                <p>
+                    Purchase Times: <span>{data.purchaseTimes}</span>
+                </p>
             </div>
             <div className='customer-detail__buttons'>
                 <p>Edit or Delete?</p>

@@ -5,11 +5,12 @@ import Form from "../module/Form";
 function AddCustomerPage() {
     const [form, setForm] = useState({
         name: "",
-        lastName: "",
-        email: "",
         phone: "",
         address: "",
         postalCode: "",
+        discountCode: "",
+        purchasePrice: 0,
+        purchaseTimes: 0,
         date: "",
         products: [],
     });
@@ -35,6 +36,9 @@ function AddCustomerPage() {
             phone: "",
             address: "",
             postalCode: "",
+            discountCode: "",
+            purchasePrice: "",
+            purchaseTimes: "",
             date: "",
             products: [],
         });

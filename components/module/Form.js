@@ -16,24 +16,17 @@ function Form({ form, setForm }) {
                 onChange={changeHandler}
             />
             <FormInput
-                name='lastName'
-                label='Last Name'
-                type='text'
-                value={form.lastName}
-                onChange={changeHandler}
-            />
-            <FormInput
-                name='email'
-                label='Email'
-                type='text'
-                value={form.email}
-                onChange={changeHandler}
-            />
-            <FormInput
                 name='phone'
                 label='Phone'
                 type='tel'
                 value={form.phone}
+                onChange={changeHandler}
+            />
+            <FormInput
+                name='postalCode'
+                label='Postal Code'
+                type='text'
+                value={form.postalCode}
                 onChange={changeHandler}
             />
             <FormInput
@@ -44,10 +37,10 @@ function Form({ form, setForm }) {
                 onChange={changeHandler}
             />
             <FormInput
-                name='postalCode'
-                label='Postal Code'
+                name='discountCode'
+                label='Discount Code'
                 type='text'
-                value={form.postalCode}
+                value={form.discountCode}
                 onChange={changeHandler}
             />
             <FormInput

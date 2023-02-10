@@ -19,12 +19,16 @@ export default async function handler(req, res) {
 
         try {
             const customer = await Customer.findOne({ _id: id });
+            if (customer.products.length !== data.products.length)
+                customer.purchaseTimes = data.purchaseTimes + 1;
+            customer.purchasePrice = data.products.reduce((total, product) => {
+                return total + +product.price * +product.qty;
+            }, 0);
             customer.name = data.name;
-            customer.lastName = data.lastName;
-            customer.email = data.email;
             customer.phone = data.phone;
             customer.address = data.address;
             customer.postalCode = data.postalCode;
+            customer.discountCode = data.discountCode;
             customer.date = data.date;
             customer.products = data.products;
             customer.updatedAt = Date.now();
