@@ -1,24 +1,25 @@
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import CustomerDetailsPage from "../../components/template/CustomerDetailsPage";
+import connectDB from "../../utils/connectDB";
+import Customer from "../../models/Customer";
 
-function Index() {
-    const [data, setData] = useState(null);
-
-    const router = useRouter();
-    const {
-        query: { customerId },
-        isReady,
-    } = router;
-
-    useEffect(() => {
-        if (isReady) {
-            fetch(`/api/customer/${customerId}`)
-                .then((res) => res.json())
-                .then((data) => setData(data.data));
-        }
-    }, [customerId, isReady]);
-    if (data) return <CustomerDetailsPage data={data} />;
+function Index({ customer }) {
+    return <CustomerDetailsPage data={customer} />;
 }
-
 export default Index;
+
+export async function getServerSideProps(ctx) {
+    const id = ctx.params.customerId;
+    try {
+        await connectDB();
+        const customer = await Customer.findOne({ _id: id });
+        return {
+            props: {
+                customer: JSON.parse(JSON.stringify(customer)),
+            },
+        };
+    } catch (err) {
+        return {
+            notFound: true,
+        };
+    }
+}

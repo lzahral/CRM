@@ -2,17 +2,26 @@ import moment from "moment";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
+import axios from "axios";
+import { useMutation } from "react-query";
+
 
 function CustomerDetailsPage({ data }) {
     const router = useRouter();
 
-    const deleteHandler = async () => {
-        const res = await fetch(`/api/delete/${data._id}`, {
-            method: "DELETE",
-        });
-        const newRes = await res.json();
-        if (newRes.status === "success") router.push("/");
+    const deleteCustomer = async () => {
+        const res = await axios.delete(`/api/delete/${data._id}`);
+        return res.data;
     };
+    const { mutate } = useMutation(deleteCustomer, {
+        onSuccess: () => {
+            alert("successfully deleted");
+            router.reload();
+        },
+        onError: () => {
+            alert("encountered an error");
+        },
+    });
     return (
         <div className='customer-detail'>
             <h4>Customer&#39;s Details</h4>
@@ -62,7 +71,7 @@ function CustomerDetailsPage({ data }) {
             </div>
             <div className='customer-detail__buttons'>
                 <p>Edit or Delete?</p>
-                <button onClick={deleteHandler}>Delete</button>
+                <button onClick={mutate}>Delete</button>
                 <Link href={`/edit/${data._id}`}>Edit</Link>
             </div>
         </div>

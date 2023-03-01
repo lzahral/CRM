@@ -1,6 +1,8 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 import Form from "../module/Form";
+import axios from "axios";
+import { useMutation } from "react-query";
 
 function AddCustomerPage() {
     const [form, setForm] = useState({
@@ -17,16 +19,19 @@ function AddCustomerPage() {
 
     const router = useRouter();
 
-    const saveHandler = async () => {
-        const res = await fetch("/api/customer", {
-            method: "POST",
-            body: JSON.stringify({ data: form }),
-            headers: { "Content-Type": "application/json" },
-        });
-        const data = await res.json();
-        console.log(data);
-        if (data.status === "success") router.push("/");
+    const sendCustomer = async () => {
+        const res = await axios.post("/api/customer", form);
+        return res.data;
     };
+    const { mutate } = useMutation(sendCustomer, {
+        onSuccess: () => {
+            alert("successfully registered");
+            router.push("/");
+        },
+        onError: () => {
+            alert("registration encountered an error");
+        },
+    });
 
     const cancelHandler = () => {
         setForm({
@@ -53,7 +58,7 @@ function AddCustomerPage() {
                 <button className='first' onClick={cancelHandler}>
                     Cancel
                 </button>
-                <button className='second' onClick={saveHandler}>
+                <button className='second' onClick={mutate}>
                     Save
                 </button>
             </div>

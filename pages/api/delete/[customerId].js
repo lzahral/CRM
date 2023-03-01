@@ -15,7 +15,6 @@ export default async function handler(req, res) {
 
     if (req.method === "DELETE") {
         const id = req.query.customerId;
-
         try {
             await Customer.findOneAndDelete({ _id: id });
             res.status(200).json({
