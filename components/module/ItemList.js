@@ -1,4 +1,6 @@
+import BoxStyle from "./BoxStyle";
 import FormInput from "./FormInput";
+import { Button, Grid, Box } from "@mui/material";
 
 function ItemList({ form, setForm }) {
     const { products } = form;
@@ -21,11 +23,20 @@ function ItemList({ form, setForm }) {
         const newProducts = [...products];
         newProducts.splice(index, 1);
         setForm({ ...form, products: newProducts });
-
     };
 
     return (
-        <div className='item-list'>
+        <Box
+            sx={{
+                border: " 1px solid ",
+                borderColor: "grey.A400",
+                borderRadius: 1,
+                p: 2,
+                ml: 4,
+                mt: 4,
+                width: "100%",
+            }}
+        >
             <p>Purchased products</p>
             {products.map((product, index) => (
                 <ProductItem
@@ -35,8 +46,14 @@ function ItemList({ form, setForm }) {
                     deleteHandler={() => deleteHandler(index)}
                 />
             ))}
-            <button onClick={addHandler}>Add Item</button>
-        </div>
+            <Button
+                variant='contained'
+                sx={{ width: "100%" }}
+                onClick={addHandler}
+            >
+                Add Item
+            </Button>
+        </Box>
     );
 }
 
@@ -44,31 +61,45 @@ export default ItemList;
 
 function ProductItem({ product, changeHandler, deleteHandler }) {
     return (
-        <div className='form-input__list'>
-            <FormInput
-                name='name'
-                label='Product Name'
-                type='text'
-                value={product.name}
-                onChange={changeHandler}
-            />
-            <div>
-                <FormInput
-                    name='price'
-                    label='Price'
-                    type='text'
-                    value={product.price}
-                    onChange={changeHandler}
-                />
-                <FormInput
-                    name='qty'
-                    label='Quantity'
-                    type='text'
-                    value={product.qty}
-                    onChange={changeHandler}
-                />
-            </div>
-            <button onClick={deleteHandler}>Remove</button>
-        </div>
+        <BoxStyle>
+            <Grid container spacing={3}>
+                <Grid item xs={12}>
+                    <FormInput
+                        name='name'
+                        label='Product Name'
+                        type='text'
+                        value={product.name}
+                        onChange={changeHandler}
+                    />
+                </Grid>
+                <Grid item xs>
+                    <FormInput
+                        name='price'
+                        label='Price'
+                        type='text'
+                        value={product.price}
+                        onChange={changeHandler}
+                    />
+                </Grid>
+                <Grid item xs>
+                    <FormInput
+                        name='qty'
+                        label='Quantity'
+                        type='text'
+                        value={product.qty}
+                        onChange={changeHandler}
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <Button
+                        variant='contained'
+                        sx={{ width: "100%" }}
+                        onClick={deleteHandler}
+                    >
+                        Remove
+                    </Button>
+                </Grid>
+            </Grid>
+        </BoxStyle>
     );
 }

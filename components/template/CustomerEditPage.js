@@ -1,12 +1,17 @@
-import moment from "moment";
-import { useRouter } from "next/router";
-import { useState } from "react";
-import Form from "../module/Form";
 import axios from "axios";
+import moment from "moment";
+import Head from "next/head";
+import Form from "../module/Form";
+import Alerts from "../module/Alerts";
+import { useState } from "react";
+import { useRouter } from "next/router";
 import { useMutation } from "react-query";
+import { Stack, Button, Typography } from "@mui/material";
 
 function CustomerEditPage({ data, id }) {
     const date = data.date ? moment(data.date).utc().format("YYYY-MM-DD") : "";
+    const [success, setSuccess] = useState(false);
+    const [error, setError] = useState(false);
     const [form, setForm] = useState({
         name: data.name,
         phone: data.phone || "",
@@ -27,11 +32,11 @@ function CustomerEditPage({ data, id }) {
     };
     const { mutate } = useMutation(editCustomer, {
         onSuccess: () => {
-            alert("successfully edited");
+            setSuccess(true);
             router.push("/");
         },
         onError: () => {
-            alert("encountered an error");
+            setError(true);
         },
     });
 
@@ -39,17 +44,43 @@ function CustomerEditPage({ data, id }) {
         router.push("/");
     };
     return (
-        <div className='customer-page'>
-            <h4>Edit Customer</h4>
+        <div>
+            <Head>
+                <title>Edit customer</title>
+            </Head>
+            <Typography
+                variant='h5'
+                component='div'
+                sx={{ flexGrow: 1, m: 3, ml: 0 }}
+            >
+                Edit Customer
+            </Typography>
+
             <Form form={form} setForm={setForm} />
-            <div className='customer-page__buttons'>
-                <button className='first' onClick={cancelHandler}>
+            <Stack
+                direction='row'
+                justifyContent='space-between'
+                sx={{ mt: 2 ,mb:4}}
+            >
+                <Button variant='contained' onClick={cancelHandler}>
                     Cancel
-                </button>
-                <button className='second' onClick={mutate}>
+                </Button>
+                <Button variant='outlined' onClick={mutate}>
                     Edit
-                </button>
-            </div>
+                </Button>
+            </Stack>
+            <Alerts
+                open={success}
+                setOpen={setSuccess}
+                type={"success"}
+                text={"Successfully edited!"}
+            />
+            <Alerts
+                open={error}
+                setOpen={setError}
+                type={"error"}
+                text={"encountered an error!"}
+            />
         </div>
     );
 }

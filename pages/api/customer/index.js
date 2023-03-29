@@ -15,7 +15,6 @@ export default async function handler(req, res) {
 
     if (req.method === "POST") {
         const data = req.body;
-        console.log(data)
         data.purchasePrice = data.products?.reduce((total, product) => {
             return total + +product.price * +product.qty;
         }, 0);

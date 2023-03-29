@@ -2,8 +2,8 @@ import connectDB from "../../utils/connectDB";
 import Customer from "../../models/Customer";
 import CustomerEditPage from "../../components/template/CustomerEditPage";
 
-function Index({customer}) {
-   return <CustomerEditPage data={customer} id={customer._id} />;
+function Index({ customer }) {
+    return <CustomerEditPage data={customer} id={customer._id} />;
 }
 export default Index;
 

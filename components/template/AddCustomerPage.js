@@ -1,10 +1,14 @@
-import { useRouter } from "next/router";
-import { useState } from "react";
-import Form from "../module/Form";
 import axios from "axios";
+import Form from "../module/Form";
+import Alerts from "../module/Alerts";
+import { useState } from "react";
+import { useRouter } from "next/router";
 import { useMutation } from "react-query";
+import { Button, Typography, Stack } from "@mui/material";
 
 function AddCustomerPage() {
+    const [success, setSuccess] = useState(false);
+    const [error, setError] = useState(false);
     const [form, setForm] = useState({
         name: "",
         phone: "",
@@ -25,11 +29,11 @@ function AddCustomerPage() {
     };
     const { mutate } = useMutation(sendCustomer, {
         onSuccess: () => {
-            alert("successfully registered");
+            setSuccess(true);
             router.push("/");
         },
         onError: () => {
-            alert("registration encountered an error");
+            setError(true);
         },
     });
 
@@ -51,17 +55,40 @@ function AddCustomerPage() {
     };
 
     return (
-        <div className='customer-page'>
-            <h4>Add New Customer</h4>
+        <div>
+            <Typography
+                sx={{ pl: 3, py: 4, mt: 4 }}
+                variant='h5'
+                color='primary'
+            >
+                Add New Customer{" "}
+            </Typography>
             <Form form={form} setForm={setForm} />
-            <div className='customer-page__buttons'>
-                <button className='first' onClick={cancelHandler}>
+            <Stack
+                sx={{ py: 2 }}
+                justifyContent='space-between'
+                spacing={1}
+                direction='row'
+            >
+                <Button variant='contained' onClick={cancelHandler}>
                     Cancel
-                </button>
-                <button className='second' onClick={mutate}>
+                </Button>
+                <Button variant='contained' onClick={mutate}>
                     Save
-                </button>
-            </div>
+                </Button>
+            </Stack>
+            <Alerts
+                open={success}
+                setOpen={setSuccess}
+                type={"success"}
+                text={"Successfully registered!"}
+            />
+            <Alerts
+                open={error}
+                setOpen={setError}
+                type={"error"}
+                text={"encountered an error!"}
+            />
         </div>
     );
 }

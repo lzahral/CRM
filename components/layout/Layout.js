@@ -1,14 +1,32 @@
-import Link from "next/link";
+import { Box, Link, Button, AppBar, Toolbar, Typography } from "@mui/material";
 
 function Layout({ children }) {
     return (
         <>
-            <header className='header'>
-                <h2>CRM</h2>
-                <Link href='/add-customer'>Add Customer</Link>
+            <header>
+                <Box sx={{ flexGrow: 1, backgroundColor: "primary.main" }}>
+                    <AppBar
+                        position='static'
+                        sx={{ flexGrow: 1, backgroundColor: "primary.main" }}
+                    >
+                        <Toolbar>
+                            <Typography
+                                variant='h6'
+                                component='div'
+                                sx={{ flexGrow: 1 }}
+                            >
+                                <Link color='#fff' underline='none' href='/'>
+                                    CRM
+                                </Link>
+                            </Typography>
+                            <Button href='/add-customer' color='inherit'>
+                                Add Customer
+                            </Button>
+                        </Toolbar>
+                    </AppBar>
+                </Box>
             </header>
-            <div className='main'>{children}</div>
-            <footer className='footer'>Next.js | CRM Project &copy;</footer>
+            <Box>{children}</Box>
         </>
     );
 }
